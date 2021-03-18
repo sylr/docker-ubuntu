@@ -24,9 +24,15 @@ RUN apt-get install -y \
 RUN curl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl && \
 	chmod +x /usr/local/bin/kubectl
 
+RUN curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+
 RUN cd /tmp && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && \
     unzip awscliv2.zip && \
     ./aws/install && \
     rm -rf *
+
+RUN echo "complete -C '/usr/local/bin/aws_completer' aws\nsource <(kubectl completion bash)" > /root/.bashrc
+
+WORKDIR /root
 
 CMD ["/bin/bash", "-c", "while [ true ]; do sleep 5; done"]
