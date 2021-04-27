@@ -31,8 +31,9 @@ RUN cd /tmp && curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -
     ./aws/install && \
     rm -rf *
 
-RUN echo "complete -C '/usr/local/bin/aws_completer' aws\nsource <(kubectl completion bash)" > /root/.bashrc
-
 WORKDIR /root
+
+RUN cat /etc/skel/.bashrc > /root/.bashrc
+RUN echo "complete -C '/usr/local/bin/aws_completer' aws\nsource <(kubectl completion bash)\nsource <(helm completion bash)" >> /root/.bashrc
 
 CMD ["/bin/bash", "-c", "while [ true ]; do sleep 5; done"]
