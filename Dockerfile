@@ -1,10 +1,8 @@
-FROM ubuntu:20.04
+FROM --platform=$TARGETPLATFORM ubuntu:22.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update
-RUN apt-get dist-upgrade -y
-RUN apt-get install -y \
+RUN apt-get update && apt-get dist-upgrade -y && apt-get install -y \
 	curl \
 	man \
 	wget \
@@ -18,6 +16,7 @@ RUN apt-get install -y \
 	mtr \
 	iputils-ping \
 	unzip \
+	redis-tools \
 	&& \
 	rm -rf /var/cache/apt
 
